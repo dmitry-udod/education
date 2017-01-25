@@ -69,4 +69,14 @@ class RoleRepository
 
         return $role->delete();
     }
+
+    /**
+     * Get roles list for selects (id => name)
+     *
+     * @return mixed
+     */
+    public function rolesForDropdown()
+    {
+        return Role::orderBy('display_name')->get()->pluck('display_name', 'id');
+    }
 }

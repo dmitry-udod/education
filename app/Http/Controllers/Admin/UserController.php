@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function __construct(UserRepository $users)
+    public function __construct(UserRepository $users, RoleRepository $roles)
     {
         $this->users = $users;
+        $this->roles = $roles;
     }
 
     /**
@@ -20,7 +22,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = $this->users->all()->paginate();
+
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -30,7 +34,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = $this->roles->rolesForDropdown();
+
+        return view('admin.users.create_edit', compact('roles'));
     }
 
     /**
