@@ -58,11 +58,12 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <span class="glyphicon glyphicon-cog"></span> Керування сайтом
+                                    <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="#">Користувачi</a>
+                                        <a href="{{ route('users.index') }}">Користувачi</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('roles.index') }}">Ролi</a>

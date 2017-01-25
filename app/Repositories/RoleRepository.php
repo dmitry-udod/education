@@ -43,11 +43,30 @@ class RoleRepository
             $role = $this->find($id);
         }
 
-        $role->name = str_slug($data['display_name']);
+        if ($role->name !== Role::ROLE_SLUG_ADMIN) {
+            $role->name = str_slug($data['display_name']);
+        }
         $role->display_name = $data['display_name'];
         $role->description = $data['description'];
         $role->save();
 
         return $role;
+    }
+
+    /**
+     * Delete role
+     *
+     * @param $id
+     * @return bool
+     */
+    public function delete($id)
+    {
+        $role = $this->find($id);
+
+        if ($role->name === Role::ROLE_SLUG_ADMIN) {
+            return false;
+        }
+
+        return $role->delete();
     }
 }

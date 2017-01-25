@@ -104,8 +104,16 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $isDeleted = $this->roles->delete($id);
+
+        if ($isDeleted) {
+            $request->session()->flash('success', 'Роль видалена');
+        } else {
+            $request->session()->flash('error', 'Помилка при видаленнi ролi');
+        }
+
+        return redirect(route('roles.index'));
     }
 }
