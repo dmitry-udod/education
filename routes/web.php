@@ -19,8 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
-//    Route::get('/', 'AdminController@welcome');
+Route::group(['prefix' => 'admin', 'middleware' => ['role:' . \App\Role::ROLE_SLUG_ADMIN]], function() {
     Route::get('/', 'HomeController@index');
-//    Route::get('/manage', ['middleware' => ['permission:manage-admins'], 'uses' => 'AdminController@manageAdmins']);
+    Route::resource('roles', 'Admin\RoleController');
 });
