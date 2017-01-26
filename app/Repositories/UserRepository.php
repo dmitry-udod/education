@@ -43,9 +43,15 @@ class UserRepository
             $user = $this->find($id);
         }
 
-//        $User->display_name = $data['display_name'];
-//        $User->description = $data['description'];
+        $user->name = $data['name'];
+        $user->password = bcrypt($data['password']);
+        $user->email = $data['email'];
+
         $user->save();
+
+        if (!empty($data['roles'])) {
+            $user->roles()->sync($data['roles']);
+        }
 
         return $user;
     }

@@ -20,6 +20,7 @@
                             <th>Iм'я</th>
                             <th>Email</th>
                             <th>Ролi</th>
+                            <th>Дата створення</th>
                             <th class="col-lg-3"></th>
                         </tr>
                         </thead>
@@ -29,7 +30,8 @@
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->roles()->get()->implode('display_name', ',') }}</td>
+                            <td>{{ $user->roles()->get()->implode('display_name', ', ') }}</td>
+                            <td>{{ $user->created_at }}</td>
                             <td>
                                 <form class="btn-separator pull-right" action="{{ route('users.destroy', $user->id) }}" method="POST">
                                     <button type="submit" class="btn btn-danger btn-sm">
@@ -50,5 +52,9 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="pull-right">
+    {{  $users->links() }}
     </div>
 @endsection
