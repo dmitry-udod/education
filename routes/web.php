@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['role:' . \App\Role::ROLE_SLUG_ADMIN]], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:' . \App\Role::ROLE_SLUG_ADMIN]], function() {
     Route::get('/', 'HomeController@index');
     Route::resource('roles', 'Admin\RoleController');
     Route::resource('users', 'Admin\UserController');
