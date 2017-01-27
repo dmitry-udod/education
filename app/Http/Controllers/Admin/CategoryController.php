@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
+    public function __construct(CategoryRepository $categories)
+    {
+        $this->categories = $categories;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->categories->all()->paginate();
+
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -24,7 +33,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create_edit');
     }
 
     /**
@@ -33,9 +42,19 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+        $user = $this->categories->save($request->all(), null);
+
+        if ($user->id) {
+            $request->session()->flash('success', 'Категорiя успiшно додана');
+
+            return redirect(route('categories.edit', $user->id));
+        }
+
+        $request->session()->flash('error', 'Помилка при створеннi категорiї');
+
+        return redirect(route('categories.create'));
     }
 
     /**
@@ -57,7 +76,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = $this->categories->find($id);
+
+        return view('admin.categories.create_edit', compact('category'));
     }
 
     /**
@@ -67,9 +88,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCategoryRequest $request, $id)
     {
-        //
+        $category = $this->categories->find($id);
+
+        $this->categories->save($request->all(), $category->id);
+
+        $request->session()->flash('success', 'Даннi збереженi');
+
+        return redirect(route('categories.edit', $category->id));
     }
 
     /**
@@ -78,8 +105,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $isDeleted = $this->categories->delete($id);
+
+        if ($isDeleted) {
+            $request->session()->flash('success', 'Данi видаленi');
+        } else {
+            $request->session()->flash('error', 'Помилка при видаленнi даних');
+        }
+
+        return redirect(route('categories.index'));
     }
 }
