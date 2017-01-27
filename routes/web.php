@@ -24,4 +24,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:' . \App\Role:
     Route::resource('roles', 'Admin\RoleController');
     Route::resource('users', 'Admin\UserController');
     Route::resource('categories', 'Admin\CategoryController');
+    Route::resource('articles', 'Admin\ArticleController');
 });

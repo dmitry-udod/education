@@ -63,6 +63,9 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="{{ route('articles.index') }}">Iнформацiя</a>
+                                    </li>
+                                    <li>
                                         <a href="{{ route('categories.index') }}">Категорiї</a>
                                     </li>
                                     <li>

@@ -21,7 +21,7 @@ class CreateArticlesTable extends Migration
             $table->dateTime('show_from')->nullable();
             $table->integer('created_by')->unsidned();
             $table->integer('category_id')->unsigned();
-
+            $table->integer('role_id')->unsigned();
             $table->timestamps();
         });
     }

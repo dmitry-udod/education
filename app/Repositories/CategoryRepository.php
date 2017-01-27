@@ -64,4 +64,9 @@ class CategoryRepository
 
         return $category->delete();
     }
+
+    public function categoriesForDropdown()
+    {
+        return Category::orderBy('name')->get()->pluck('name', 'id');
+    }
 }
