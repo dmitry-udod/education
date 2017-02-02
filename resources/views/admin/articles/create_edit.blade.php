@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+    <link href="/css/bootstrap-datetimepicker.css" rel="stylesheet">
+@endsection
+
 @section('content')
         <div class="row">
             <div class="col-md-12">
@@ -79,15 +83,36 @@
                             </div>
 
                             {{-- Is Published --}}
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-2 control-label">Назва<span class="required">*</span></label>
+                            <div class="form-group{{ $errors->has('is_publish') ? ' has-error' : '' }}">
+                                <label for="is_publish" class="col-md-2 control-label">Опублiковати</label>
                                 <div class="col-md-10">
-                                    <input id="name" type="text" class="form-control" name="name" value="{{ $category->name or old('name') }}" required autofocus>
+                                    <input id="is_publish" type="checkbox"  name="is_publish" value="{{ $category->is_publish or old('is_publish') }}">
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('is_publish'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                        <strong>{{ $errors->first('is_publish') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Published At --}}
+                            <div class="form-group{{ $errors->has('publish_at') ? ' has-error' : '' }}">
+                                <label for="publish_at" class="col-md-2 control-label">Опублiковати з</label>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker2'>
+                                            <input id="publish_at" type="text"  class="form-control" name="publish_at" value="{{ $category->publish_at or old('publish_at') }}">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    @if ($errors->has('publish_at'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('publish_at') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -114,9 +139,11 @@
 
 @section('js')
     <script src="/js/ckeditor/ckeditor.js"></script>
+
+    <script src="/js/moment-with-locales.js"></script>
+    <script src="/js/bootstrap-datetimepicker.js"></script>
     <script>
         CKEDITOR.replace('html', {
-//            extraPlugins: 'uploadimage,image2',
             extraPlugins: 'uploadimage,colorbutton',
             // Upload images to a CKFinder connector (note that the response type is set to JSON).
             uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
@@ -129,6 +156,13 @@
 
             language: "uk",
 
+        });
+
+
+        $(function () {
+            $('#datetimepicker2').datetimepicker({
+                locale: 'ru'
+            });
         });
     </script>
 @endsection

@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/admin.css" rel="stylesheet">
+    @yield('css')
 
     <!-- Scripts -->
     <script>
