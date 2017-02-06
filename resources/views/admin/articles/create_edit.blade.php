@@ -13,7 +13,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="@if (!empty($category->id)) {{ route('categories.update', $category->id) }} @else {{ route('categories.store') }} @endif">
+                        <form class="form-horizontal" role="form" method="POST" action="@if (!empty($category->id)) {{ route('articles.update', $category->id) }} @else {{ route('articles.store') }} @endif">
                             {{ csrf_field() }}
 
                             {{--Name --}}
@@ -46,12 +46,11 @@
 
                             {{--Roles--}}
                             <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
-                                <label for="roles" class="col-md-2 control-label">Рiвень</label>
+                                <label for="roles" class="col-md-2 control-label">Рiвень<span class="required">*</span></label>
                                 <div class="col-md-10">
                                     <select multiple id="roles" class="form-control" name="roles[]">
                                         @foreach($roles as $id => $role)
-
-                                            <option value="{{ $id  }}" @if (in_array($id, [])) selected @endif>{{ $role }}</option>
+                                            <option value="{{ $id }}" @if (in_array($id, [])) selected @endif>{{ $role }}</option>
                                         @endforeach
                                     </select>
 
@@ -65,7 +64,7 @@
 
                             {{--Roles--}}
                             <div class="form-group{{ $errors->has('categories') ? ' has-error' : '' }}">
-                                <label for="categories" class="col-md-2 control-label">Категорiя</label>
+                                <label for="categories" class="col-md-2 control-label">Категорiя<span class="required">*</span></label>
                                 <div class="col-md-10">
                                     <select multiple id="categories" class="form-control" name="categories[]">
                                         @foreach($categories as $id => $category)
@@ -74,9 +73,9 @@
                                         @endforeach
                                     </select>
 
-                                    @if ($errors->has('roles'))
+                                    @if ($errors->has('categories'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('roles') }}</strong>
+                                        <strong>{{ $errors->first('categories') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -84,7 +83,7 @@
 
                             {{-- Is Published --}}
                             <div class="form-group{{ $errors->has('is_publish') ? ' has-error' : '' }}">
-                                <label for="is_publish" class="col-md-2 control-label">Опублiковати</label>
+                                <label for="is_publish" class="col-md-2 control-label">Опублiкувати</label>
                                 <div class="col-md-10">
                                     <input id="is_publish" type="checkbox"  name="is_publish" value="{{ $category->is_publish or old('is_publish') }}">
 
@@ -98,7 +97,7 @@
 
                             {{-- Published At --}}
                             <div class="form-group{{ $errors->has('publish_at') ? ' has-error' : '' }}">
-                                <label for="publish_at" class="col-md-2 control-label">Опублiковати з</label>
+                                <label for="publish_at" class="col-md-2 control-label">Опублiкувати з</label>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <div class='input-group date' id='datetimepicker2'>

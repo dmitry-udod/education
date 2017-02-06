@@ -18,11 +18,21 @@ class CreateArticlesTable extends Migration
             $table->string('name');
             $table->text('html');
             $table->boolean('is_published');
-            $table->dateTime('show_from')->nullable();
+            $table->dateTime('publish_at')->nullable();
             $table->integer('created_by')->unsidned();
-            $table->integer('category_id')->unsigned();
-            $table->integer('role_id')->unsigned();
             $table->timestamps();
+        });
+
+        // Create table for associating articles to roles
+        Schema::create('article_role', function (Blueprint $table) {
+            $table->integer('article_id')->unsigned();
+            $table->integer('role_id')->unsigned();
+        });
+
+        // Create table for associating articles to categories
+        Schema::create('article_category', function (Blueprint $table) {
+            $table->integer('article_id')->unsigned();
+            $table->integer('category_id')->unsigned();
         });
     }
 
@@ -33,6 +43,8 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('article_category');
+        Schema::dropIfExists('article_role');
         Schema::dropIfExists('articles');
     }
 }

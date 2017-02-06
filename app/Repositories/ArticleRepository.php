@@ -42,7 +42,7 @@ class ArticleRepository
         } else {
             $article = $this->find($id);
         }
-
+dd($data);
         $article->name = $data['name'];
         $article->slug = $data['slug'];
         $article->order = (int)$data['order'];

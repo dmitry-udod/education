@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\StoreArticleRequest;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\RoleRepository;
@@ -46,22 +46,22 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreArticleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreArticleRequest $request)
     {
-        $user = $this->categories->save($request->all(), null);
+        $article = $this->articles->save($request->all(), null);
 
-        if ($user->id) {
+        if ($article->id) {
             $request->session()->flash('success', 'Категорiя успiшно додана');
 
-            return redirect(route('categories.edit', $user->id));
+            return redirect(route('articles.edit', $article->id));
         }
 
         $request->session()->flash('error', 'Помилка при створеннi категорiї');
 
-        return redirect(route('categories.create'));
+        return redirect(route('articles.create'));
     }
 
     /**
@@ -95,7 +95,7 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategoryRequest $request, $id)
+    public function update(StoreArticleRequest $request, $id)
     {
         $category = $this->categories->find($id);
 
